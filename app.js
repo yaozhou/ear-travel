@@ -16,7 +16,7 @@ ReactDOM.render((
             
             <Route path="/app" component={Container} >       
                 <Route path="/login" component={AdminLogin} />
-                <Route path="/main" component={Main} />
+                <Route path="/" component={Main} />
                 <Route path="/audio" component={Audio} />
             </Route>
                  

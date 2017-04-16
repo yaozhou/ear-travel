@@ -35,7 +35,7 @@ var sounds = [
     {
         id : 1,
         name: '下雨天的咖啡厅',
-        desc : '在咖啡厅靠窗的座位上，安静地读一本书，看着雨水打在窗玻璃上',
+        desc : '在咖啡厅靠窗的座位上，看着雨水打在窗玻璃上',
         img_url : '/img/boli.jpg',
         channels : [
             {id : 1, name : '下雨', audio_url : '/yinxiao/下雨.m4a'},
