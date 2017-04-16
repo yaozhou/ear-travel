@@ -11,7 +11,7 @@ import FlatButton from 'material-ui/FlatButton';
 const style = {
       height: 100,
       width: 400,
-      margin: 20,
+      margin: 40,
       textAlign: 'center',
       display: 'inline-block',
     };
