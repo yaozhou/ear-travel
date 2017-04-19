@@ -21,46 +21,112 @@ import { query, store } from './state'
 //耳朵去旅行 里面音效非常多，还可自由组合播放。
 //我一般撸代码时听上面的那些和缓的环境音，debug时听摇滚..
 
-var source = [
-  'yinxiao/山居吟-龚一.mp3',
-  'yinxiao/柔和海浪.mp3',
-  'yinxiao/篝火声.wav',
-  'yinxiao/午夜虫鸣.mp3',
-  'yinxiao/晚上知了叫的声音.wav',
-  'yinxiao/下雨.m4a',
-  'yinxiao/西藏念经.wav',
-  'yinxiao/风声.WAV',
-  'yinxiao/咖啡厅.mp3',
-  'yinxiao/鸟叫.mp3',
-  'yinxiao/Midnight-Blues.mp3',
-  'yinxiao/bird_chirping.mp3',
-  'yinxiao/和尚念经的声音.wav',
-  'yinxiao/火车车厢.mp3',
-  'yinxiao/海水加海鸥的声音.wav',
-  'yinxiao/早晨6点的公交车站.wav',
-  'yinxiao/第101次约会.mp3',
-  'yinxiao/夜的钢琴曲1.mp3',
-  'yinxiao/夜的钢琴曲2.mp3',
-  'yinxiao/夜的钢琴曲3.mp3',
-  'yinxiao/夜的钢琴曲4.mp3',
-  'yinxiao/夜的钢琴曲5.mp3',
-  'yinxiao/夜的钢琴曲6.mp3',
-  'yinxiao/夜的钢琴曲7.mp3',
-  'yinxiao/夜的钢琴曲8.mp3',
-  'yinxiao/夜的钢琴曲9.mp3',
-  'yinxiao/夜的钢琴曲10.mp3',
-  'yinxiao/午夜的萨克斯.mp3',
+var NATURE_ID = 1 ;
+var MUSIC_ID = 2 ;
+var PIANO_ID = 3 ;
+var GUQIN_ID = 4 ;
+var SAKESI_ID = 5 ;
+var GUITA_ID = 6 ;
+var PLACE_ID = 7 ;
+var TRANSPORTATION_ID = 8 ;
 
+var g_conf = [
+  { id: NATURE_ID, name: '自然', sub_id: [], sounds: []},
+  { id: MUSIC_ID, name: '音乐', sub_id: [PIANO_ID, GUQIN_ID, SAKESI_ID, GUITA_ID], sounds: []},
+  { id: PIANO_ID, name: '钢琴', sub_id: [], sounds: []},
+  { id: GUQIN_ID, name: '古琴', sub_id: [], sounds: []},
+  { id: SAKESI_ID, name: '萨克斯', sub_id: [], sounds: []},
+  { id: GUITA_ID, name: '吉他', sub_id: [], sounds: []},
+  { id: PLACE_ID, name: '地方', sub_id: [], sounds: []},
+  { id: TRANSPORTATION_ID, name: '交通工具', sub_id: [], sounds: []},
+]
+
+var g_source = [
+  {id : 1, name : '山居吟', url:'yinxiao/山居吟-龚一.mp3', tag:[GUQIN_ID]},
+  {id : 2, name : '第101次约会', url:'yinxiao/第101次约会.mp3', tag: [PIANO_ID]},
+  {id : 3, name : '夜的钢琴曲1', url:'yinxiao/夜的钢琴曲1.mp3', tag: [PIANO_ID]},
+  {id : 4, name : '夜的钢琴曲2', url:'yinxiao/夜的钢琴曲2.mp3', tag: [PIANO_ID]},
+  {id : 5, name : '夜的钢琴曲3', url:'yinxiao/夜的钢琴曲3.mp3', tag: [PIANO_ID]},
+  {id : 6, name : '夜的钢琴曲4', url:'yinxiao/夜的钢琴曲4.mp3', tag: [PIANO_ID]},
+  {id : 7, name : '夜的钢琴曲5', url:'yinxiao/夜的钢琴曲5.mp3', tag: [PIANO_ID]},
+  {id : 8, name : '夜的钢琴曲6', url:'yinxiao/夜的钢琴曲6.mp3', tag: [PIANO_ID]},
+  {id : 9, name : '夜的钢琴曲7', url:'yinxiao/夜的钢琴曲7.mp3', tag: [PIANO_ID]},
+  {id : 10, name : '夜的钢琴曲8', url:'yinxiao/夜的钢琴曲8.mp3', tag: [PIANO_ID]},
+  {id : 11, name : '夜的钢琴曲9', url:'yinxiao/夜的钢琴曲9.mp3', tag: [PIANO_ID]},
+  {id : 12, name : '夜的钢琴曲10', url:'yinxiao/夜的钢琴曲10.mp3', tag: [PIANO_ID]},
+  {id : 13, name : '午夜的萨克斯', url:'yinxiao/午夜的萨克斯.mp3', tag: [SAKESI_ID]},
+  {id : 14, name:'Midnight-Blues', url:'yinxiao/Midnight-Blues.mp3', tag: [GUITA_ID]},
+
+
+  {id: 14, name:'柔和海浪', url:'yinxiao/柔和海浪.mp3', tag: [NATURE_ID]},
+  {id: 15, name:'篝火声', url:'yinxiao/篝火声.wav', tag: [NATURE_ID]},
+  {id: 16, name:'午夜虫鸣', url:'yinxiao/午夜虫鸣.mp3', tag: [NATURE_ID]},
+  {id: 17, name: '晚上知了叫的声音', url:'yinxiao/晚上知了叫的声音.wav', tag: [NATURE_ID]},
+  {id: 18, name: '下雨', url:'yinxiao/下雨.m4a', tag: [NATURE_ID]},
+  {id: 19, name: '风声', url:'yinxiao/风声.WAV', tag: [NATURE_ID]},
+  {id: 20, name: '鸟叫', url:'yinxiao/鸟叫.mp3', tag: [NATURE_ID]},
+  {id: 21, name:'鸟叫2', url:'yinxiao/bird_chirping.mp3', tag: [NATURE_ID]},
+  {id: 22, name:'海水加海鸥的声音',url:'yinxiao/海水加海鸥的声音.wav', tag: [NATURE_ID]},
+  
+  {id: 23, name:'早晨6点的公交车站', url:'yinxiao/早晨6点的公交车站.wav', tag: [PLACE_ID]},
+  {id: 24, name:'咖啡厅', url:'yinxiao/咖啡厅.mp3', tag: [PLACE_ID]},
+  {id: 25, name:'寺庙念经', url:'yinxiao/和尚念经的声音.wav', tag: [PLACE_ID]},
+  {id: 27, name:'西藏念经',url:'yinxiao/西藏念经.wav', tag: [PLACE_ID]},
+  
+  {id: 26, name:'火车车厢', url:'yinxiao/火车车厢.mp3', tag: [TRANSPORTATION_ID]},
 
 ]
+
+
+
+// var NATURE_TAG = {id: 1, name:} ;
+// var MUSIC_TAG = {id: 2, name:'音乐'} ;
+// var PIANO_TAG = {id: 3, name: '钢琴'} ;
+// var GUQIN_TAG = {id: 4, name: '古琴'} ;
+// var SAKESI_TAG = {id: 5, name: '萨克斯'} ;
+// var GUITA_TAG = {id: 6, name: '吉他'} ;
+// var PLACE_TAG = {id: 7, name: '地方'} ;
+// var TRANSPORTATION_TAG = {id: 8, name: '交通工具'} ;
+
+
+
+// var g_category = [] ;
+// g_category[NATURE_TAG.id] = {} [] ;
+// g_category[MUSIC_TAG.id] = [PIANO_TAG.id, GUQIN_TAG.id, SAKESI_TAG.id, GUITA_TAG.id] ;
+// g_category[PLACE_TAG.id] = [] ;
+// g_category[TRANSPORTATION_TAG.id] = [] ;
+
+
+
+
 
 export default class extends Component {
     constructor(props) {
         super(props) ;
+
+        var g_category = [] ;
+        g_conf.forEach(v => g_category[v.id]=v) ;
+
+        g_category.forEach(function(v, idx) {
+            v.sub_id.forEach(vv => g_category[vv].inner = true) ;
+            v.children = v.sub_id.map(vv => g_category[vv]) ;
+        }) ;
+
+        var g_outmost = g_category.filter(v => v.inner != true) ;
+
+        g_source.forEach(function(v) {
+          v.tag.forEach(vv => g_category[vv].sounds.push(v)) ;
+        })
+        
+        console.log(g_category) ;
+
+        this.state = {
+          outmost_category : g_outmost,
+          category : g_category,
+        }
     }
 
     componentDidMount() {
-      document.title = '安静地写代码'
       this.interval = setInterval(function() {
         query('/api/count', {type : 'audio'}) ;  
       }, 1000*60*5) ;      
@@ -71,29 +137,44 @@ export default class extends Component {
         clearInterval(this.interval) ;
     }
 
-    render () { 
-        var list = source.map(function(v,idx) {
-          let n = v.split('/')[v.split('/').length-1] ;
+    render_category(category) {
+      if (category.children.length == 0) {
+        let r = category.sounds.map(function(v, idx) {
           return (
-              <Panel key={idx} header={n.split('.')[0]}>
-              <audio src={v} controls loop preload="none"></audio>  
+              <Panel key={idx} header={v.name}>
+              <audio src={v.url} controls loop preload="none"></audio>  
               </Panel>
-            )
-        })
+              )
+        }) ;
+        return r ;
+      }
+
+      let children = category.children.map(function(v) {
+        return (
+            <Tab eventKey={v.id} title={v.name} key={v.id}>
+                  {this.render_category(v)}
+            </Tab>
+          )
+      }.bind(this))
+
+      return (<Tabs defaultActiveKey={category.children[0].id} animation={false} key={category.id} id={'' + category.id}>
+                 {children}
+            </Tabs>)
+    }
+
+    render () { 
+            let t = {children : this.state.outmost_category , id : 0} ;
+
+            let content = this.render_category(t) ;        
 
             return (
-                <div>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div>                                  
                     
-                    </div>                 
+                    
                     
                     <hr />
-                    
-                    <p>提示: 可随意组合播放各种音效哦,带上耳机效果更好.</p>
-                    <a href="http://bbs.manmanqiusuo.com/">社区</a>
-                    
-                    {list}
-                     
+                    { content }
+                                      
                 </div>
                                 
                                  
