@@ -74,6 +74,8 @@ var g_source = [
   {id: 27, name:'西藏念经',url:'yinxiao/西藏念经.wav', tag: [PLACE_ID]},
   
   {id: 26, name:'火车车厢', url:'yinxiao/火车车厢.mp3', tag: [TRANSPORTATION_ID]},
+  {id: 27, name:'火车经过', url:'yinxiao/火车经过.wav', tag: [TRANSPORTATION_ID], interval: 60},
+  {id: 28, name:'轮船汽笛声', url:'yinxiao/轮船汽笛声.mp3', tag: [TRANSPORTATION_ID], interval: 60},
 
 ]
 
@@ -129,7 +131,17 @@ export default class extends Component {
     componentDidMount() {
       this.interval = setInterval(function() {
         query('/api/count', {type : 'audio'}) ;  
-      }, 1000*60*5) ;      
+      }, 1000*60*5) ;
+
+      console.log(this.refs) ;
+
+      Object.keys(this.refs).forEach(function(v) {
+        this.refs[v].addEventListener('ended', function() {
+          console.log(this.refs[v] + 'end') ;
+          setTimeout(() => this.refs[v].play(), this.refs[v].getAttribute('data-interval')*1000) ;
+          //this.refs[v].play() ;
+        }.bind(this), false) ;
+      }.bind(this)) ;
     }
 
     componentWillUnmount() {
@@ -142,7 +154,9 @@ export default class extends Component {
         let r = category.sounds.map(function(v, idx) {
           return (
               <Panel key={idx} header={v.name}>
-              <audio src={v.url} controls loop preload="none"></audio>  
+              {v.interval == null ? 
+                <audio src={v.url} controls loop preload="none"></audio>  :
+                <audio ref={"audio_"+v.id} src={v.url} controls preload="none" data-interval={v.interval}></audio>}
               </Panel>
               )
         }) ;
