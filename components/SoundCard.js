@@ -21,26 +21,24 @@ export default class extends Component {
     constructor(props) {
         super(props) ;
         this.state = {
-
+            in_play: false,
         }
     }
 
-    on_play() {
+    componentDidMount() {
         Object.keys(this.refs).forEach(function(v) {
-                this.refs[v].addEventListener('ended', function() {                
-                setTimeout(() => this.refs[v].play(), this.refs[v].getAttribute('data-interval')*1000) ;
-                
-            }.bind(this), false) ;
-            this.refs[v].play() ;
-        }.bind(this))        
+                this.refs[v].addEventListener('ended', function() {
+                       setTimeout(() => this.refs[v].play(), this.refs[v].getAttribute('data-interval')*1000) ;}.bind(this), 
+                       false) ;            
+        }.bind(this))
     }
 
-    on_stop() {
+    on_click() {
         Object.keys(this.refs).forEach(function(v) {
-            this.refs[v].pause() ;
-        }.bind(this))        
+            !this.state.in_play ? this.refs[v].play() : this.refs[v].pause() ;
+        }.bind(this))
+        this.setState({in_play : !this.state.in_play}) ;
     }
-
 
     render() {
             let sound = this.props.sound ;
@@ -59,12 +57,9 @@ export default class extends Component {
                             <img src={sound.img_url}  />
                         </CardMedia>
                         <CardTitle title={sound.name} subtitle={sound.desc} />
-                        <CardText>
-                          评论内容
-                        </CardText>
                         <CardActions>
-                          <FlatButton label="播放" onTouchTap={this.on_play.bind(this)}/>
-                          <FlatButton label="停止" onTouchTap={this.on_stop.bind(this)}/>
+                          <FlatButton label={this.state.in_play ? "停止" : "播放"} 
+                                        onTouchTap={this.on_click.bind(this)}/>                          
                         </CardActions>
                     </Card>
                     {channels}       

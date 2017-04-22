@@ -19,52 +19,36 @@
 	constructor(props) {
 		super(props) ;
 
+		let r = Math.floor(Math.random() * this.props.sounds.length) ;		
+
 		this.state = {
-			random_play : false			
+			random_play : false,
+			cur_random_sound : this.props.sounds[r],
 		}
 	}
 
-	defaultEndedListener(audio) {
-      if (this.state.random_play) return ;
-    
-      audio.getAttribute('data-interval') == 0 ? audio.play() : 
-      	setTimeout(() => audio.play(), audio.getAttribute('data-interval') * 1000) ;
+	
+
+    endListener(audio) {    	
+    	audio.getAttribute('data-interval') == 0 ? audio.play() : 
+      			setTimeout(() => audio.play(), audio.getAttribute('data-interval') * 1000) ;    	
     }
 
-    randomEndedListener() {
-      if (!this.state.random_play) return ;
-
-      let idx = Math.floor(Math.random() * this.props.sounds.length) ;
-      this.refs['audio_' + this.props.sounds[idx].id].play() ;
+    play_random_sound() {
+    	let idx = Math.floor(Math.random() * this.props.sounds.length) ;
+    	this.setState({cur_random_sound : this.props.sounds[idx]}) ;
+		setTimeout(() => this.refs['random'].play(), 1000) ;
     }
 
 	componentDidMount() {
 		this.props.sounds.forEach(function(v) {
 			this.refs['audio_' + v.id].addEventListener('ended', 
-          		() => this.defaultEndedListener(this.refs['audio_' + v.id]), false) ;
-
-        	this.refs['audio_' + v.id].addEventListener('ended', 
-          		() => this.randomEndedListener(), false) ;
+          		() => this.endListener(this.refs['audio_' + v.id]), false) ;
 		}.bind(this))
+
+		if (this.refs['random'] != undefined)
+			this.refs['random'].addEventListener('ended', () => this.play_random_sound(), false) ;
 	}
-
-	category_play() {
-      this.props.sounds.forEach(function(v) {
-        this.refs['audio_' + v.id].pause() ;
-      }.bind(this))
-      //this.setState({random_play : true}) ;
-      this.state.random_play = true ;
-      this.randomEndedListener() ;
-    }
-
-    category_stop() {
-      //this.setState({random_play : false}) ;
-      this.state.random_play = false ;
-      this.props.sounds.forEach(function(v) {
-        this.refs['audio_' + v.id].pause() ;
-      }.bind(this))
-    }
-
 
 	render() {
       
@@ -78,21 +62,21 @@
               )
         }) ;
 
+		if (this.props.enable_random) {
+        	audios.push(
+        		<Panel key={-1} header={'随机播放: 当前(' + this.state.cur_random_sound.name + ')'}>
+        		<audio ref={"random"} src={this.state.cur_random_sound.url} controls preload="none"> </audio>
+        		</Panel>
+        	)
+    	}
 
-        return (
-        		<div>
+        return ( <div>
         		{audios}
-        		{this.props.enable_random ? 
-            	<Button onClick={this.category_play.bind(this)}>随机播放</Button> :	null }
-
-            	{this.props.enable_random ? 
-            	<Button onClick={this.category_stop.bind(this)}>随机播放停止</Button> :	null }
-        		</div>
-        	   )
+        		</div>)
       }
       
       // have sub category
-    let children = this.props.children.map(function(v) {
+    	let children = this.props.children.map(function(v) {
         return (
             <Tab eventKey={v.id} title={v.name} key={v.id}>
             	<Category id={v.id} name={v.name} sounds={v.sounds} children={v.children} enable_random={v.enable_random} />
