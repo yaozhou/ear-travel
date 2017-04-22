@@ -26,13 +26,19 @@ export default class extends Component {
     }
 
     on_play() {
-        this.refs.channel_0.play() ;
-        this.refs.channel_1.play() ;        
+        Object.keys(this.refs).forEach(function(v) {
+                this.refs[v].addEventListener('ended', function() {                
+                setTimeout(() => this.refs[v].play(), this.refs[v].getAttribute('data-interval')*1000) ;
+                
+            }.bind(this), false) ;
+            this.refs[v].play() ;
+        }.bind(this))        
     }
 
     on_stop() {
-        this.refs.channel_0.pause() ;
-        this.refs.channel_1.pause() ;
+        Object.keys(this.refs).forEach(function(v) {
+            this.refs[v].pause() ;
+        }.bind(this))        
     }
 
 
@@ -40,7 +46,9 @@ export default class extends Component {
             let sound = this.props.sound ;
             let channels = sound.channels.map(function(v, idx) {
                         return (
-                                <audio key={idx} ref={'channel_'+idx} src={v.audio_url} loop preload="none"></audio>
+                                
+                                <audio key={idx} ref={'channel_'+idx} src={v.audio_url} 
+                                        preload="none" data-interval={v.interval==null?0:v.interval}></audio>
                             )
                     }) ;
 

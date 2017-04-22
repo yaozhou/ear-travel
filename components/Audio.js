@@ -69,16 +69,18 @@ var g_source = [
   {id: 21, name:'鸟叫2', url:'yinxiao/bird_chirping.mp3', tag: [NATURE_ID]},
   {id: 22, name:'海水加海鸥的声音',url:'yinxiao/海水加海鸥的声音.wav', tag: [NATURE_ID]},
   {id: 23, name:'沙滩海鸥',url:'yinxiao/沙滩海鸥.mp3', tag: [NATURE_ID]},
+  {id: 24, name: '海鸥2', url:'yinxiao/海鸥2.wav', tag: [NATURE_ID]},
+  {id: 25, name: '海鸥3', url:'yinxiao/海鸥3.wav', tag: [NATURE_ID]},
 
   
-  {id: 23, name:'早晨6点的公交车站', url:'yinxiao/早晨6点的公交车站.wav', tag: [PLACE_ID]},
-  {id: 24, name:'咖啡厅', url:'yinxiao/咖啡厅.mp3', tag: [PLACE_ID]},
-  {id: 25, name:'寺庙念经', url:'yinxiao/和尚念经的声音.wav', tag: [PLACE_ID]},
-  {id: 27, name:'西藏念经',url:'yinxiao/西藏念经.wav', tag: [PLACE_ID]},
+  {id: 33, name:'早晨6点的公交车站', url:'yinxiao/早晨6点的公交车站.wav', tag: [PLACE_ID]},
+  {id: 34, name:'咖啡厅', url:'yinxiao/咖啡厅.mp3', tag: [PLACE_ID]},
+  {id: 35, name:'寺庙念经', url:'yinxiao/和尚念经的声音.wav', tag: [PLACE_ID]},
+  {id: 37, name:'西藏念经',url:'yinxiao/西藏念经.wav', tag: [PLACE_ID]},
   
-  {id: 26, name:'火车车厢', url:'yinxiao/火车车厢.mp3', tag: [TRANSPORTATION_ID]},
-  {id: 27, name:'火车经过', url:'yinxiao/火车经过.wav', tag: [TRANSPORTATION_ID], interval: 60},
-  {id: 28, name:'轮船汽笛声', url:'yinxiao/轮船汽笛声.mp3', tag: [TRANSPORTATION_ID], interval: 60},
+  {id: 46, name:'火车车厢', url:'yinxiao/火车车厢.mp3', tag: [TRANSPORTATION_ID]},
+  {id: 47, name:'火车经过', url:'yinxiao/火车经过.wav', tag: [TRANSPORTATION_ID], interval: 60},
+  {id: 48, name:'轮船汽笛声', url:'yinxiao/轮船汽笛声.mp3', tag: [TRANSPORTATION_ID], interval: 60},
 
 ]
 

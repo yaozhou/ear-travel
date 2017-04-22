@@ -50,7 +50,9 @@ var sounds = [
         channels : [
             //{id : 14, name : '柔和海浪', audio_url : '/yinxiao/柔和海浪.mp3'},
             {id: 23, name:'沙滩海鸥',audio_url:'yinxiao/沙滩海鸥.mp3'},            
-            {id: 28, name: '轮船汽笛声', audio_url : '/yinxiao/轮船汽笛声.mp3', interval:60},
+            {id: 28, name: '轮船汽笛声', audio_url : '/yinxiao/轮船汽笛声.mp3', interval:120},
+            {id: 24, name: '海鸥2', audio_url:'yinxiao/海鸥2.wav', interval: 80},
+            //{id: 25, name: '海鸥3', url:'yinxiao/海鸥3.wav', tag: [NATURE_ID]},
         ]
     },
 
