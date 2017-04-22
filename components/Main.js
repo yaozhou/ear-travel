@@ -42,6 +42,17 @@ var sounds = [
             {id : 2, name : '咖啡厅', audio_url : '/yinxiao/咖啡厅.mp3'},
         ]
     },
+    {
+        id : 1,
+        name: '在海边看船来船往',
+        desc : '在海边沙滩上，看碧海蓝天，船来船往',
+        img_url : '/img/ship.jpg',
+        channels : [
+            //{id : 14, name : '柔和海浪', audio_url : '/yinxiao/柔和海浪.mp3'},
+            {id: 23, name:'沙滩海鸥',audio_url:'yinxiao/沙滩海鸥.mp3'},            
+            {id: 28, name: '轮船汽笛声', audio_url : '/yinxiao/轮船汽笛声.mp3', interval:60},
+        ]
+    },
 
 ] ;
 

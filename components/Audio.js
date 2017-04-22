@@ -13,6 +13,7 @@ import Panel from 'react-bootstrap/lib/Panel'
 import Col from 'react-bootstrap/lib/Col'
 import Well from 'react-bootstrap/lib/Well'
 import { query, store } from './state'
+import Category from './Category'
 
 // 合适的降噪效果好的耳机，一些舒缓的背景环境音隔绝办公室杂音。
 //我一直听的有
@@ -33,7 +34,7 @@ var TRANSPORTATION_ID = 8 ;
 var g_conf = [
   { id: NATURE_ID, name: '自然', sub_id: [], sounds: []},
   { id: MUSIC_ID, name: '音乐', sub_id: [PIANO_ID, GUQIN_ID, SAKESI_ID, GUITA_ID], sounds: []},
-  { id: PIANO_ID, name: '钢琴', sub_id: [], sounds: []},
+  { id: PIANO_ID, name: '钢琴', sub_id: [], sounds: [], enable_random: true},
   { id: GUQIN_ID, name: '古琴', sub_id: [], sounds: []},
   { id: SAKESI_ID, name: '萨克斯', sub_id: [], sounds: []},
   { id: GUITA_ID, name: '吉他', sub_id: [], sounds: []},
@@ -67,6 +68,8 @@ var g_source = [
   {id: 20, name: '鸟叫', url:'yinxiao/鸟叫.mp3', tag: [NATURE_ID]},
   {id: 21, name:'鸟叫2', url:'yinxiao/bird_chirping.mp3', tag: [NATURE_ID]},
   {id: 22, name:'海水加海鸥的声音',url:'yinxiao/海水加海鸥的声音.wav', tag: [NATURE_ID]},
+  {id: 23, name:'沙滩海鸥',url:'yinxiao/沙滩海鸥.mp3', tag: [NATURE_ID]},
+
   
   {id: 23, name:'早晨6点的公交车站', url:'yinxiao/早晨6点的公交车站.wav', tag: [PLACE_ID]},
   {id: 24, name:'咖啡厅', url:'yinxiao/咖啡厅.mp3', tag: [PLACE_ID]},
@@ -123,77 +126,30 @@ export default class extends Component {
         console.log(g_category) ;
 
         this.state = {
-          outmost_category : g_outmost,
-          category : g_category,
+          outmost_category : g_outmost,          
         }
     }
 
+    
+
     componentDidMount() {
-      this.interval = setInterval(function() {
-        query('/api/count', {type : 'audio'}) ;  
-      }, 1000*60*5) ;
-
-      console.log(this.refs) ;
-
-      Object.keys(this.refs).forEach(function(v) {
-        this.refs[v].addEventListener('ended', function() {
-          console.log(this.refs[v] + 'end') ;
-          setTimeout(() => this.refs[v].play(), this.refs[v].getAttribute('data-interval')*1000) ;
-          //this.refs[v].play() ;
-        }.bind(this), false) ;
-      }.bind(this)) ;
+      
     }
 
     componentWillUnmount() {
-      if (this.interval != null) 
-        clearInterval(this.interval) ;
+      
     }
 
-    render_category(category) {
-      if (category.children.length == 0) {
-        let r = category.sounds.map(function(v, idx) {
-          return (
-              <Panel key={idx} header={v.name}>
-              {v.interval == null ? 
-                <audio src={v.url} controls loop preload="none"></audio>  :
-                <audio ref={"audio_"+v.id} src={v.url} controls preload="none" data-interval={v.interval}></audio>}
-              </Panel>
-              )
-        }) ;
-        return r ;
-      }
 
-      let children = category.children.map(function(v) {
-        return (
-            <Tab eventKey={v.id} title={v.name} key={v.id}>
-                  {this.render_category(v)}
-            </Tab>
-          )
-      }.bind(this))
-
-      return (<Tabs defaultActiveKey={category.children[0].id} animation={false} key={category.id} id={'' + category.id}>
-                 {children}
-            </Tabs>)
-    }
 
     render () { 
-            let t = {children : this.state.outmost_category , id : 0} ;
-
-            let content = this.render_category(t) ;        
+            let t = {children : this.state.outmost_category , id : 0} ;            
 
             return (
-                <div>                                  
-                    
-                    
-                    
+                <div>                    
                     <hr />
-                    { content }
-                                      
-                </div>
-                                
-                                 
-                
+                    <Category id={0} children={this.state.outmost_category} sounds={[]} />
+                </div>                
                 )
-
     }
 }
