@@ -93,7 +93,7 @@ export default class extends Component {
                 <a href="http://bbs.manmanqiusuo.com">意见与反馈</a>
                 <a href="http://blog.manmanqiusuo.com">{"    我的博客"}</a>
 
-                
+                <a href="http://kexue.nianna.space" style={{float:'right'}}>{"你需要梯子?"}</a>
                 </div>
 
                 )
