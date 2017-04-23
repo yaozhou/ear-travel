@@ -80,7 +80,8 @@ export default class extends Component {
                 )
         })
 
-        return ( <Tabs defaultActiveKey={1} animation={false} id="noanim-tab-example">
+        return ( <div>
+                    <Tabs defaultActiveKey={1} animation={false} id="noanim-tab-example">
                             <Tab eventKey={1} title="场景方案">
                                     {cards}
                             </Tab>
@@ -88,6 +89,13 @@ export default class extends Component {
                                     < Audio />
                             </Tab>
                     </Tabs>
+                    <hr />
+                <a href="http://bbs.manmanqiusuo.com">意见与反馈</a>
+                <a href="http://blog.manmanqiusuo.com">{"    我的博客"}</a>
+
+                
+                </div>
+
                 )
     }
 }
